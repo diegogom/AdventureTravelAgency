@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Adventures Travel Agency - Agencia de Viajes</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+
+    <style>
+        /* Estilos generales del cuerpo para el fondo negro puro */
+        body {
+            font-family: 'Varela Round', 'Nunito', sans-serif;
+            background-color: #000000; /* Fondo negro puro */
+            color: #000000; /* Color de texto principal, ajustar si es necesario */
+            overflow-x: hidden;
+        }
+
+        /* --- Nombre de la Agencia (esquina superior izquierda) con estilo semitransparente --- */
+        #agency-name {
+            position: fixed;
+            top: 30px;
+            left: 20px;
+            z-index: 9999; /* Asegura que esté por encima de todo */
+            color: rgba(255, 255, 255, 0.7); /* Blanco semitransparente */
+            font-size: 2.2rem; /* Tamaño más grande para el estilo de la imagen */
+            font-weight: 900; /* Extra bold para el estilo de la imagen */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.2); /* Sombra para profundidad y "brillo" */
+            letter-spacing: 0.05em; /* Un poco de espacio entre letras */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        #agency-name:hover {
+            color: rgba(255, 255, 255, 0.9); /* Más opaco al pasar el ratón */
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        /* --- Estilos para el nuevo Botón Flotante de Menú (esquina superior derecha) --- */
+        #menu-btn {
+            position: fixed;
+            top: 30px;
+            right: 20px; /* Movido a la derecha */
+            z-index: 9998; /* Un poco más bajo que el saludo, pero alto */
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 123, 255, 0.15);
+            border: 2px solid #00bfff;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        #menu-btn:hover {
+            background-color: rgba(0, 123, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: #00bfff;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* --- Estilos para el Menú Lateral (slide-in) --- */
+        #side-menu {
+            position: fixed;
+            top: 0;
+            right: -250px; /* Inicialmente oculto a la derecha */
+            width: 220px; /* Ancho fijo para el menú */
+            height: 100%;
+            background-color: #1c1c1c; /* Fondo del menú principal */
+            padding: 30px 20px;
+            transition: right 0.4s ease; /* Transición para 'right' */
+            z-index: 9997; /* Por debajo del botón y del saludo */
+            box-shadow: -3px 0 10px rgba(0,0,0,0.4); /* Sombra hacia la izquierda */
+            overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+        }
+
+        #side-menu.show {
+            right: 0; /* Muestra el menú deslizándose a la vista */
+        }
+
+        #side-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #side-menu ul li {
+            margin: 15px 0; /* Espacio entre los ítems principales del menú */
+        }
+
+        #side-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 8px 0; /* Pequeño padding para los ítems principales */
+            transition: color 0.2s ease, background-color 0.2s ease;
+        }
+
+        #side-menu ul li a:hover {
+            color: #00bfff;
+        }
+
+        /* Estilos específicos para los dropdowns dentro del menú lateral */
+        #side-menu .dropdown-toggle::after {
+            float: right; /* Flecha a la derecha */
+            margin-top: 8px; /* Ajuste vertical de la flecha */
+            color: #fff; /* Color de la flecha */
+        }
+
+        #side-menu .dropdown-menu {
+            position: static !important; /* Es crucial para que el submenú se expanda dentro del menú lateral */
+            float: none;
+            width: 100%;
+            margin-top: 8px;
+            background-color: #2a2a2a; /* Fondo ligeramente más oscuro para los submenús */
+            border: none;
+            border-radius: 8px; /* Esquinas más suaves */
+            padding: 10px 0; /* Padding general para el contenedor del submenú */
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.3); /* Sombra interna sutil */
+        }
+
+        #side-menu .dropdown-item {
+            color: #e0e0e0; /* Color de texto para los ítems del submenú */
+            padding: 12px 20px; /* Aumentado el padding para más espacio vertical y horizontal */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 16px; /* Ajuste de tamaño de fuente si es necesario */
+            border-radius: 5px; /* Pequeño border-radius para cada ítem */
+            margin: 2px 10px; /* Margen para separar ligeramente los items y dar espacio al border-radius */
+        }
+
+        #side-menu .dropdown-item:hover {
+            background-color: #007bff; /* Color de fondo al pasar el ratón */
+            color: #fff; /* Color de texto al pasar el ratón */
+            transform: translateX(5px); /* Efecto sutil de movimiento */
+            text-decoration: none; /* Asegura que no haya subrayado */
+        }
+
+
+        /* Estilos para las imágenes de la sección "About" */
+        .custom-image {
+            max-width: 85%;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilos para el portafolio de imágenes como miniaturas */
+        #portfolio .row > [class*="col-"] {
+            padding: 0;
+        }
+        .portfolio-box {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            max-height: 250px;
+            margin: 5px;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .portfolio-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .portfolio-box:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-box-caption {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: #feffff;
+            width: 100%;
+            text-align: center;
+            padding: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .portfolio-box:hover .portfolio-box-caption {
+            opacity: 1;
+        }
+
+        /* --- Estilos para la sección de REGIONES (ajustados para evitar desbordamiento) --- */
+        .projects-section .project-text {
+            padding: 2.5rem; /* Aumento del padding general para dar más espacio interno */
+            display: flex; /* Usamos flexbox para centrar contenido verticalmente */
+            flex-direction: column;
+            justify-content: center;
+            height: 100%; /* Asegura que ocupe la altura completa de su padre flex */
+            box-sizing: border-box; /* Incluye padding en el cálculo de la altura */
+        }
+
+        .projects-section .project-text h4 {
+            font-size: 1.5rem; /* Ajuste del tamaño de fuente para el título de la región (ligeramente más pequeño) */
+            margin-bottom: 0.75rem; /* Más espacio debajo del título */
+            word-break: break-word; /* Asegura que las palabras largas se rompan y no se salgan */
+            overflow-wrap: break-word; /* Otra propiedad para asegurar el salto de línea */
+            line-height: 1.2; /* Ajusta la altura de línea para títulos de varias palabras */
+        }
+
+        .projects-section .project-text p {
+            font-size: 0.95rem; /* Ajuste del tamaño de fuente para la descripción */
+            margin-bottom: 0;
+            line-height: 1.6; /* Mejora la legibilidad del párrafo */
+            word-break: break-word; /* Asegura que las palabras largas se rompan también en la descripción */
+            overflow-wrap: break-word; /* Otra propiedad para asegurar el salto de línea */
+        }
+
+        /* Media queries para pantallas más pequeñas para afinar aún más */
+        @media (max-width: 992px) { /* Para tabletas y móviles en orientación horizontal */
+            .projects-section .project-text {
+                padding: 1.5rem; /* Reduce el padding en pantallas más pequeñas */
+            }
+            .projects-section .project-text h4 {
+                font-size: 1.3rem; /* Reduce aún más el tamaño de fuente */
+            }
+            .projects-section .project-text p {
+                font-size: 0.85rem; /* Reduce el tamaño de fuente de la descripción */
+            }
+        }
+
+        @media (max-width: 768px) { /* Para móviles */
+            .projects-section .project-text {
+                padding: 1rem; /* Padding más pequeño en móviles */
+                text-align: center !important; /* Centra el texto en móviles */
+            }
+            .projects-section .project-text h4 {
+                font-size: 1.2rem;
+            }
+            .projects-section .project-text p {
+                font-size: 0.8rem;
+            }
+            .projects-section .row.gx-0.mb-5.mb-lg-0.justify-content-center {
+                flex-direction: column; /* Apila las columnas verticalmente */
+            }
+            .projects-section .row.gx-0.justify-content-center .order-lg-first {
+                order: initial; /* Resetea el orden para que la imagen siempre esté primero en móviles */
+            }
+        }
+
+
+        /* --- Estilos para la sección de CONTACTO (Formulario) --- */
+        .signup-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 22px;
+            padding: 45px 35px 55px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 10;
+            margin: 80px auto;
+            color: #f0e68c;
+        }
+
+        .signup-section h2 {
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #000000;
+            text-shadow: 0 0 10px #297da7;
+        }
+
+        #toggleFormBtn {
+            display: block;
+            margin: 0 auto 25px auto;
+            padding: 14px 40px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            border-radius: 36px;
+            background: linear-gradient(90deg, #2a6d9b, #2a6d9b);
+            border: none;
+            color: #000000;
+            cursor: pointer;
+            box-shadow: 0 5px 22px #2a6d9b;
+            transition: background-color 0.35s ease, transform 0.35s ease;
+            user-select: none;
+        }
+
+        #toggleFormBtn:hover, #toggleFormBtn:focus {
+            background: linear-gradient(90deg, #ccc, #ccc);
+            outline: none;
+            transform: scale(1.07);
+            box-shadow: 0 7px 28px #FFFFFF;
+        }
+
+        #formularioContacto {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.75s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.75s ease;
+        }
+
+        #formularioContacto.show {
+            max-height: 1200px;
+            opacity: 1;
+            margin-top: 25px;
+        }
+
+        input.form-control,
+        textarea.form-control {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 14px;
+            color: #FFFFFF;
+            font-size: 1.1rem;
+            padding: 16px 22px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.35);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        input.form-control::placeholder,
+        textarea.form-control::placeholder {
+            color: #FFFFFF;
+            opacity: 0.9;
+        }
+
+        input.form-control:focus,
+        textarea.form-control:focus {
+            background: rgba(255, 255, 255, 0.45);
+            color: #FFFFFF;
+            outline: none;
+            box-shadow: 0 0 18px #FFFFFF;
+        }
+
+        label.form-label {
+            color: #FFFFFF;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        button.btn-success {
+            background: #2ecc71;
+            border: none;
+            font-weight: 700;
+            padding: 16px 0;
+            font-size: 1.2rem;
+            border-radius: 36px;
+            width: 100%;
+            box-shadow: 0 6px 25px #27ae60cc;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button.btn-success:hover,
+        button.btn-success:focus {
+            background: #27ae60;
+            box-shadow: 0 9px 35px #5F94BA;
+            outline: none;
+        }
+
+        @media (max-width: 480px) {
+            .signup-section {
+                padding: 35px 20px 45px;
+                margin: 60px 15px;
+            }
+
+            #toggleFormBtn {
+                width: 100%;
+            }
+        }
+
+        /* --- Estilos para el MODAL de Login --- */
+        .login-container-modal {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            margin: auto; /* Centrar en la modal */
+        }
+
+        .login-container-modal h2 {
+            margin-bottom: 25px;
+            color: #5F94BA;
+            text-align: center;
+        }
+
+        .login-container-modal .form-control {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: #e9ecef;
+            color: #333;
+        }
+        .login-container-modal .form-control::placeholder {
+            color: #5F94BA;
+        }
+        .login-container-modal .form-control:focus {
+            background-color: #fff;
+            border-color: #457b9d;
+            box-shadow: 0 0 0 0.25rem rgba(69, 123, 157, 0.25);
+        }
+
+        .btn-login {
+            background-color: #1d3557;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: #16324f;
+        }
+
+        .icon-login {
+            font-size: 3rem;
+            color: #457b9d;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .text-small {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-align: center;
+        }
+
+        /* --- Estilos para el MODAL de Registro (Se mantiene oculto en HTML pero el CSS lo soporta) --- */
+        .register-container-modal {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .register-container-modal h2 {
+            margin-bottom: 25px;
+            color: #1d3557;
+            text-align: center;
+        }
+
+        .register-container-modal .form-control {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: #e9ecef;
+            color: #333;
+        }
+        .register-container-modal .form-control:focus {
+            background-color: #fff;
+            border-color: #457b9d;
+            box-shadow: 0 0 0 0.25rem rgba(69, 123, 157, 0.25);
+        }
+
+        .btn-register {
+            background-color: #457b9d;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+
+        .btn-register:hover {
+            background-color: #306888;
+        }
+
+        .icon-register {
+            font-size: 3rem;
+            color: #1d3557;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* ****************************************************** */
+        /* MODIFICACIÓN PARA EL BOTÓN "Explorar" */
+        /* Sobreescribe el estilo por defecto de btn-primary para este caso específico */
+        .masthead .btn-primary {
+            background-color: #4AA4C2; /* Color solicitado */
+            border-color: #4AA4C2; /* Asegura que el borde también sea del mismo color */
+        }
+
+        .masthead .btn-primary:hover {
+            background-color: #0099cc; /* Un tono ligeramente más oscuro para el hover */
+            border-color: #0099cc;
+        }
+        /* ****************************************************** */
+    </style>
+</head>
+<body id="page-top">
+
+    <div id="agency-name">
+        Adventures Travel Agency
+    </div>
+
+    <div id="menu-btn">
+        <div class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div id="side-menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="destinosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Destinos
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="destinosDropdown">
+                    <li><a class="dropdown-item" href="europa-occidental.html">Europa<br>Occidental</a></li>
+                    <li><a class="dropdown-item" href="europa-oriental.html">Europa<br>Oriental</a></li>
+                    <li><a class="dropdown-item" href="europa-septentrional.html">Europa<br>Septentrional</a></li>
+                    <li><a class="dropdown-item" href="europa-meridional.html">Europa<br>Meridional</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="serviciosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Servicios
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="serviciosDropdown">
+                    <li><a class="dropdown-item" href="vuelos.html">Vuelos</a></li>
+                    <li><a class="dropdown-item" href="hospedaje.html">Hospedaje</a></li>
+                    <li><a class="dropdown-item" href="actividades.html">Actividades</a></li>
+                    <li><a class="dropdown-item" href="asistencia.html">Asistencia </a></li>
+                </ul>
+            </li>
+            <li><a href="paquetes.html">Paquetes</a></li>
+            <li><a href="#projects">Regiones</a></li>
+            <li><a href="#signup">Contacto</a></li>
+            <li><a href="mis_reservas.html">Mis Reservas</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar Sesión</a></li>
+        </ul>
+    </div>
+
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Descubre Europa</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Viajes inolvidables a los destinos más icónicos del viejo continente.</h2>
+                    <a class="btn btn-primary" href="#about">Explorar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="portfolio" class="py-5">
+        <div class="container-fluid p-0">
+            <div class="row g-0">
+                <div class="col-lg-4 col-sm-6">
+                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg" title="GRECIA">
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="GRECIA" />
+                        <div class="portfolio-box-caption">
+                            <div class="project-name">GRECIA</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg" title="ITALIA">
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="ITALIA" />
+                        <div class="portfolio-box-caption">
+                            <div class="project-name">ITALIA</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg" title="RUSIA">
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="RUSIA" />
+                        <div class="portfolio-box-caption">
+                            <div class="project-name">RUSIA</div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg" title="FRANCIA">
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="FRANCIA" />
+                        <div class="portfolio-box-caption">
+                            <div class="project-name">FRANCIA</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg" title="ALEMANIA">
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/5.jpg" alt="ALEMANIA" />
+                        <div class="portfolio-box-caption">
+                            <div class="project-name">ALEMANIA</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg" title="REINO UNIDO">
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/6.jpg" alt="REINO UNIDO" />
+                        <div class="portfolio-box-caption">
+                            <div class="project-name">REINO UNIDO</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br><br><br>
+
+    <section class="projects-section bg-light" id="projects">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/paris.jpg" alt="París" /></div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="featured-text text-center text-lg-left">
+                        <h4>Europa</h4>
+                        <p class="text-black-50 mb-0">Europa ofrece una gran variedad de lugares interesantes, desde monumentos históricos como el Coliseo en Roma y la Torre Eiffel en París, hasta ciudades vibrantes como Berlín y Barcelona, y paisajes naturales como los Alpes.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+                <div class="col-lg-6"><img class="img-fluid" src="assets/img/1.jpg" alt="Roma" /></div>
+                <div class="col-lg-6">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-left">
+                                <h4 class="text-white">Europa Occidental</h4>
+                                <p class="mb-0 text-white-50">Europa Occidental es una de las regiones más desarrolladas y culturalmente influyentes del continente europeo. Incluye países como Francia, Alemania, Bélgica, Países Bajos, Suiza, Austria y Luxemburgo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+                <div class="col-lg-6"><img class="img-fluid" src="assets/img/rusia.jpg" alt="Ámsterdam" /></div>
+                <div class="col-lg-6">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-left">
+                                <h4 class="text-white">Europa Oriental</h4>
+                                <p class="mb-0 text-white-50">Europa Oriental abarca una región rica en historia, cultura y arquitectura que ha evolucionado tras décadas de transformaciones políticas y sociales. Algunos países destacados son Polonia, República Checa, Hungría, Rumanía.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+                <div class="col-lg-6"><img class="img-fluid" src="assets/img/noruega.jpg" alt="Praga" /></div>
+                <div class="col-lg-6 order-lg-first">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-right">
+                                <h4 class="text-white">Europa Septentrional</h4>
+                                <p class="mb-0 text-white-50">Europa Septentrional está formada por países del norte del continente, conocidos por su alto nivel de vida, paisajes naturales impresionantes y cultura escandinava. Incluye países como Suecia, Noruega, Finlandia, Dinamarca, Islandia.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row gx-0 justify-content-center">
+                <div class="col-lg-6"><img class="img-fluid" src="assets/img/malta.jpg" alt="Barcelona" /></div>
+                <div class="col-lg-6 order-lg-first">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-right">
+                                <h4 class="text-white">Europa Meridional</h4>
+                                <p class="mb-0 text-white-50">Europa Meridional, también conocida como Europa del Sur, incluye los países bañados por el mar Mediterráneo: España, Italia, Grecia, Portugal, y en algunos contextos también Malta, Croacia y Chipre.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br><br><br><br><br>
+
+    <section class="signup-section" id="signup" aria-label="Formulario de contacto">
+        <h2>¿Listo para tu próximo destino?</h2>
+        <button id="toggleFormBtn" aria-expanded="false" aria-controls="formularioContacto">Contáctanos</button>
+        <div id="formularioContacto" role="region" aria-live="polite" aria-hidden="true" tabindex="-1">
+            <form id="contactForm" class="mt-3" novalidate>
+                <div class="mb-4">
+                    <label for="nombre" class="form-label">Nombre completo <span aria-hidden="true" style="color:#d9534f;">*</span></label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Tu nombre completo" required minlength="3" aria-describedby="nombreHelp" />
+                    <div id="nombreHelp" class="form-text"></div>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="form-label">Correo electrónico <span aria-hidden="true" style="color:#d9534f;">*</span></label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@correo.com" required aria-describedby="emailHelp" />
+                    <div id="emailHelp" class="form-text"></div>
+                </div>
+                <div class="mb-4">
+                    <label for="mensaje" class="form-label">Mensaje o destino deseado</label>
+                    <textarea type="text" id="mensaje" name="mensaje" class="form-control" rows="4" placeholder="Cuéntanos tu destino o cualquier consulta" aria-describedby="mensajeHelp"></textarea>
+                    <div id="mensajeHelp" class="form-text"></div>
+                </div>
+                <button type="submit" class="btn btn-success">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="contact-section bg-black">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Dirección</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50">Zona 10, Ciudad de Guatemala</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-envelope text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Correo</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50">contacto@adventurestravel.com</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-phone text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Teléfono</h4>
+                            <hr class="my-4 mx-auto" />
+                            <div class="small text-black-50">+502 1234 5678</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social d-flex justify-content-center">
+                <a class="mx-2" href="https://www.facebook.com/profile.php?id=61577248891703" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a class="mx-2" href="https://www.instagram.com/_adventurestravel_/?hl=es" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a class="mx-2" href="https://www.tiktok.com/@_adventurestravel3?lang=es-419" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a class="mx-2" href="https://x.com/_AdventuresT_?t=uNOmpxm-cjYHOrGU8oFl9A&s=08" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer bg-black small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; Adventures Travel Agency 2025</div></footer>
+    
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content login-container-modal">
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-circle icon-login"></i>
+                        <h2>Iniciar Sesión</h2>
+                    </div>
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="loginEmail" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña" required>
+                        </div>
+                        <button type="submit" class="btn btn-login w-100 py-2">Ingresar</button>
+                    </form>
+                    <p class="text-small mt-3">¿No tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Regístrate aquí</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content register-container-modal">
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-plus icon-register"></i>
+                        <h2>Registrarse</h2>
+                    </div>
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="registerName" placeholder="Nombre de usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="registerEmail" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="registerPassword" placeholder="Contraseña" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirmar contraseña" required>
+                        </div>
+                        <button type="submit" class="btn btn-register w-100 py-2">Registrarse</button>
+                    </form>
+                    <p class="text-small mt-3">¿Ya tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Inicia sesión aquí</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+        // JS para el menú lateral
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            document.getElementById('side-menu').classList.toggle('show');
+        });
+
+        // Cierra el menú si se hace clic fuera de él (opcional, pero buena UX)
+        document.addEventListener('click', function(event) {
+            const sideMenu = document.getElementById('side-menu');
+            const menuBtn = document.getElementById('menu-btn');
+            const isClickInsideMenu = sideMenu.contains(event.target);
+            const isClickOnButton = menuBtn.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnButton && sideMenu.classList.contains('show')) {
+                sideMenu.classList.remove('show');
+            }
+        });
+
+        // Manejo del formulario de contacto (ejemplo básico de validación)
+        document.getElementById('toggleFormBtn').addEventListener('click', function() {
+            const formContainer = document.getElementById('formularioContacto');
+            const isHidden = formContainer.classList.contains('visually-hidden') || !formContainer.classList.contains('show');
+            
+            if (isHidden) {
+                formContainer.classList.remove('visually-hidden'); // Asegurarse de que no esté oculto por Bootstrap
+                formContainer.classList.add('show');
+                this.setAttribute('aria-expanded', 'true');
+                formContainer.setAttribute('aria-hidden', 'false');
+            } else {
+                formContainer.classList.remove('show');
+                this.setAttribute('aria-expanded', 'false');
+                formContainer.setAttribute('aria-hidden', 'true');
+            }
+        });
+
+        // Validación de formulario de contacto
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita el envío por defecto del formulario
+
+            let isValid = true;
+
+            // Validación del nombre
+            const nombreInput = document.getElementById('nombre');
+            const nombreHelp = document.getElementById('nombreHelp');
+            if (nombreInput.value.trim().length < 3) {
+                nombreInput.classList.add('is-invalid');
+                nombreHelp.textContent = 'El nombre debe tener al menos 3 caracteres.';
+                nombreHelp.style.color = '#dc3545';
+                isValid = false;
+            } else {
+                nombreInput.classList.remove('is-invalid');
+                nombreHelp.textContent = '';
+            }
+
+            // Validación del email
+            const emailInput = document.getElementById('email');
+            const emailHelp = document.getElementById('emailHelp');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value.trim())) {
+                emailInput.classList.add('is-invalid');
+                emailHelp.textContent = 'Ingresa un correo electrónico válido.';
+                emailHelp.style.color = '#dc3545';
+                isValid = false;
+            } else {
+                emailInput.classList.remove('is-invalid');
+                emailHelp.textContent = '';
+            }
+
+            // Si el formulario es válido, puedes enviar los datos (aquí solo mostramos un mensaje)
+            if (isValid) {
+                alert('¡Mensaje enviado con éxito!');
+                contactForm.reset(); // Limpia el formulario
+                document.getElementById('formularioContacto').classList.remove('show'); // Oculta el formulario
+                document.getElementById('toggleFormBtn').setAttribute('aria-expanded', 'false');
+                document.getElementById('formularioContacto').setAttribute('aria-hidden', 'true');
+            }
+        });
+
+        // Validación básica del formulario de login (solo un ejemplo)
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (email === "user@example.com" && password === "password123") {
+                alert("Inicio de sesión exitoso!");
+                const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                loginModal.hide();
+                // Aquí podrías redirigir al usuario o cambiar el estado de la UI
+            } else {
+                alert("Credenciales incorrectas. Inténtalo de nuevo.");
+            }
+        });
+
+        // Validación básica del formulario de registro (solo un ejemplo)
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert("Las contraseñas no coinciden.");
+                return;
+            }
+
+            if (name && email && password) {
+                alert("Registro exitoso! Ahora puedes iniciar sesión.");
+                const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                registerModal.hide();
+                // Opcional: abrir el modal de login después del registro
+                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                loginModal.show();
+            } else {
+                alert("Por favor, completa todos los campos.");
+            }
+        });
+    </script>
+</body>
+</html>
