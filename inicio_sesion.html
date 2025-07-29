@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inicio de Sesión - Adventures Travel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #598BB3, #598BB3);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .login-container {
+      background: white;
+      padding: 40px 35px 50px;
+      border-radius: 15px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+    .login-container h2 {
+      color: #598BB3;
+      margin-bottom: 30px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .input-group-text {
+      background: #598BB3;
+      color: white;
+      border: none;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+    .form-control {
+      border-radius: 0 10px 10px 0;
+      border-left: none;
+      padding-left: 15px;
+      height: 45px;
+      font-size: 1rem;
+      box-shadow: none !important;
+    }
+    .form-control:focus {
+      box-shadow: 0 0 5px #598BB3;
+      border-color: #598BB3;
+    }
+    .btn-login {
+      margin-top: 20px;
+      background-color: #598BB3;
+      color: white;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+      border: none;
+      width: 100%;
+      box-shadow: 0 5px 15px rgba(29,53,87,0.4);
+      cursor: pointer;
+    }
+    .btn-login:hover {
+      background-color: #598BB3;
+      box-shadow: 0 7px 20px rgba(22,50,79,0.7);
+    }
+    .icon-login {
+      font-size: 4rem;
+      color: #598BB3;
+      margin-bottom: 25px;
+      user-select: none;
+    }
+    .text-small {
+      font-size: 0.9rem;
+      color: #598BB3;
+      margin-top: 25px;
+    }
+    .text-small a {
+      color: #598BB3;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .text-small a:hover {
+      color: #598BB3;
+      text-decoration: underline;
+    }
+    .error-msg {
+      color: #598BB3;
+      font-size: 0.9rem;
+      margin-top: -12px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    /* Nuevo estilo para mensaje de credenciales inválidas */
+    #errorCredenciales {
+      color: #598BB3;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      text-align: center;
+      display: none; /* Oculto por defecto */
+    }
+  </style>
+</head>
+<body>
+
+  <main class="login-container" role="main" aria-label="Formulario de inicio de sesión">
+    <div class="icon-login" aria-hidden="true">
+      <i class="fas fa-user-circle"></i>
+    </div>
+    <h2>Iniciar Sesión</h2>
+    <form id="formLogin" novalidate>
+      
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="fas fa-user"></i></span>
+        <input
+          type="text"
+          id="usuario"
+          class="form-control"
+          placeholder="Nombre de usuario"
+          aria-label="Nombre de usuario"
+          required
+          autocomplete="username"
+        />
+      </div>
+      <div id="errorUsuario" class="error-msg" style="display:none;">Por favor ingresa tu nombre de usuario.</div>
+      
+      <div class="mb-3 input-group">
+        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+        <input
+          type="password"
+          id="contrasena"
+          class="form-control"
+          placeholder="Contraseña"
+          aria-label="Contraseña"
+          required
+          autocomplete="current-password"
+        />
+      </div>
+      <div id="errorContrasena" class="error-msg" style="display:none;">Por favor ingresa tu contraseña.</div>
+      
+      <div id="errorCredenciales" class="error-msg">Usuario o contraseña incorrectos.</div>
+
+      <button type="submit" class="btn-login" aria-label="Ingresar a la cuenta">Ingresar</button>
+    </form>
+    <p class="text-small">
+      ¿No tienes cuenta? <a href="#" tabindex="0">Regístrate</a>
+    </p>
+  </main>
+
+  <script>
+    const form = document.getElementById('formLogin');
+    const usuarioInput = document.getElementById('usuario'); // Renombrado para evitar conflicto
+    const contrasenaInput = document.getElementById('contrasena'); // Renombrado
+    const errorUsuario = document.getElementById('errorUsuario');
+    const errorContrasena = document.getElementById('errorContrasena');
+    const errorCredenciales = document.getElementById('errorCredenciales'); // Nuevo elemento de error
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      let valid = true;
+
+      // Reset all errors
+      errorUsuario.style.display = 'none';
+      errorContrasena.style.display = 'none';
+      errorCredenciales.style.display = 'none'; // Ocultar el mensaje de error de credenciales al inicio
+
+      const usuario = usuarioInput.value.trim(); // Obtener el valor del campo
+      const contrasena = contrasenaInput.value.trim(); // Obtener el valor del campo
+
+      if (!usuario) {
+        errorUsuario.style.display = 'block';
+        valid = false;
+      }
+      if (!contrasena) {
+        errorContrasena.style.display = 'block';
+        valid = false;
+      }
+
+      if (valid) {
+        // *** Lógica de validación de usuario y contraseña ***
+        // Para este ejemplo, definimos un usuario y contraseña válidos
+        const usuarioValido = "usuario123"; // Puedes cambiarlo
+        const contrasenaValida = "password123"; // Puedes cambiarlo
+
+        if (usuario === usuarioValido && contrasena === contrasenaValida) {
+          // Credenciales correctas
+          localStorage.setItem('usuarioLogueado', usuario);
+          window.location.href = 'mis_reservas.html'; // Redirige a la página de reservas
+        } else {
+          // Credenciales incorrectas
+          errorCredenciales.style.display = 'block';
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
+

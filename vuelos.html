@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Servicios - Vuelos | Adventures Travel Agency</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <style>
+    /* Fondo con imagen */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #191b1b;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: url('assets/img/fondo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    /* Capa oscura para mejorar legibilidad */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.2);
+      z-index: -1;
+    }
+
+    .navbar {
+      background: #191b1b;
+    }
+    .navbar-brand, .nav-link {
+      color: #f0f8ff !important;
+      font-weight: 600;
+    }
+    .nav-link.active {
+      color: #598BB3 !important;
+      font-weight: 700;
+    }
+    .hero-banner {
+      position: relative;
+      background: url('assets/img/vuelo.jpg') center/cover no-repeat;
+      height: 420px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
+    }
+    .hero-banner h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px 30px;
+      border-radius: 8px;
+    }
+    .features-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+    .feature-card {
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      flex: 1 1 250px;
+      max-width: 320px;
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .feature-card i {
+      font-size: 3rem;
+      color: #191b1b;
+      margin-bottom: 15px;
+    }
+    footer {
+      background-color: #191b1b;
+      color: #ddd;
+      padding: 20px 0;
+      margin-top: auto;
+    }
+    footer a {
+      color: #484949;
+      text-decoration: none;
+      margin: 0 8px;
+      font-size: 1.2rem;
+    }
+    footer a:hover {
+      color: #484949;
+    }
+    .btn-home-container {
+      text-align: center;
+      margin: 30px 0 50px 0;
+    }
+    .btn-home {
+      background-color: #484949;
+      color: #f0f8ff;
+      font-weight: 700;
+      padding: 12px 40px;
+      font-size: 1.3rem;
+      border-radius: 50px;
+      border: none;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,64,128,0.3);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-home:hover {
+      background-color: #484949;
+      box-shadow: 0 6px 15px rgba(0,38,77,0.6);
+      color: #598BB3;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container px-4">
+    <a class="navbar-brand" href="index.html">Adventures Travel Agency</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span
+        class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">Vuelos</a></li>
+        <li class="nav-item"><a class="nav-link" href="hospedaje.html">Hospedaje</a></li>
+        <li class="nav-item"><a class="nav-link" href="actividades.html">Actividades</a></li>
+        <li class="nav-item"><a class="nav-link" href="asistencia.html">Asistencia Personalizada</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container my-5">
+  <section class="hero-banner">
+    <h1>Vuelos</h1>
+  </section>
+
+  <p class="lead text-center mb-5">Nuestros vuelos son seguros, económicos y disponibles durante todo el año para que puedas viajar sin preocupaciones.</p>
+
+  <section class="features-list">
+    <article class="feature-card">
+      <i class="fas fa-plane-departure"></i>
+      <h5>Reservas Flexibles</h5>
+      <p>Reserva fácilmente y cambia tu vuelo sin complicaciones.</p>
+    </article>
+
+    <article class="feature-card">
+      <i class="fas fa-city"></i>
+      <h5>Vuelos Directos</h5>
+      <p>Conecta con las principales ciudades europeas sin escalas.</p>
+    </article>
+
+    <article class="feature-card">
+      <i class="fas fa-tags"></i>
+      <h5>Ofertas Exclusivas</h5>
+      <p>Aprovecha promociones especiales para nuestros clientes.</p>
+    </article>
+
+    <article class="feature-card">
+      <i class="fas fa-headset"></i>
+      <h5>Asistencia 24/7</h5>
+      <p>Soporte continuo para tus itinerarios y reservas.</p>
+    </article>
+  </section>
+</main>
+
+<footer class="text-center">
+  <div class="container">
+    <div class="btn-home-container mb-3">
+      <a href="index.html" class="btn-home" role="button" aria-label="Volver a Inicio">Inicio</a>
+    </div>
+    <p>© 2025 Adventures Travel Agency - Todos los derechos reservados</p>
+    <div>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Europa Occidental - Viajes Increíbles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #919191; /* Gris oscuro */
+        }
+        .navbar {
+            background-color: #598BB3;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .hero-section {
+            background: url('https://viajes.nationalgeographic.com.es/medio/2022/08/17/paris_00c02500_800x800.jpg') no-repeat center center/cover; /* Imagen representativa para la región */
+            color: white;
+            padding: 100px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        .hero-section p {
+            font-size: 1.5rem;
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        .card {
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-primary {
+            background-color: #598BB3;
+            border-color: #598BB3;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .main-content-bg {
+            background-color: #B3B3B3; /* El mismo gris oscuro del body */
+        }
+        .footer-grey-bg {
+            background-color: #919191; /* El mismo gris oscuro del body */
+            color: white;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        footer .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+        }
+        .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .price-section {
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            color: #333;
+        }
+        .price-section label {
+            font-weight: bold;
+        }
+        .price-display {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .input-group-text {
+            background-color: #e9ecef;
+        }
+        .modal-price-detail {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #dee2e6;
+        }
+        .modal-price-detail p {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+        .modal-price-detail .total-price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .confirmation-modal-message {
+            opacity: 0;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #198754;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 1s ease-out;
+        }
+        .confirmation-modal-message.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Viajes Increíbles</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section" style="background: url('https://viajes.nationalgeographic.com.es/medio/2022/08/17/paris_00c02500_800x800.jpg') no-repeat center center/cover;">
+        <div class="container">
+            <h1>Descubre Europa Occidental</h1>
+            <p>Desde la majestuosidad de París hasta la historia de Londres y los canales de Ámsterdam, incluyendo los Alpes y pequeños estados.</p>
+        </div>
+    </header>
+
+    <main class="container my-5 main-content-bg">
+        <section id="destinos" class="mb-5">
+            <h2 class="text-center mb-4" style="color: white;">Nuestros Destinos en Europa Occidental</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/francia.jpg" class="card-img-top" alt="Francia">
+                        <div class="card-body">
+                            <h5 class="card-title">Francia</h5>
+                            <p class="card-text">Sumérgete en el romanticismo de París, la cultura de la Provenza y los castillos del Loira.</p>
+                            <div class="price-section">
+                                <label for="persons-francia" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-francia" value="1" min="1" data-base-price="1300">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-francia">1300</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Francia" data-persons-id="persons-francia">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/reino-unido.jpg" class="card-img-top" alt="Reino Unido">
+                        <div class="card-body">
+                            <h5 class="card-title">Reino Unido</h5>
+                            <p class="card-text">Explora la historia de Londres, los paisajes escoceses y la campiña inglesa.</p>
+                            <div class="price-section">
+                                <label for="persons-reino-unido" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-reino-unido" value="1" min="1" data-base-price="1250">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-reino-unido">1250</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Reino Unido" data-persons-id="persons-reino-unido">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/alemania.jpg" class="card-img-top" alt="Alemania">
+                        <div class="card-body">
+                            <h5 class="card-title">Alemania</h5>
+                            <p class="card-text">Descubre la vibrante Berlín, los castillos de Baviera y la Selva Negra.</p>
+                            <div class="price-section">
+                                <label for="persons-alemania" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-alemania" value="1" min="1" data-base-price="1180">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-alemania">1180</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Alemania" data-persons-id="persons-alemania">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/holanda.jpg" class="card-img-top" alt="Países Bajos">
+                        <div class="card-body">
+                            <h5 class="card-title">Países Bajos</h5>
+                            <p class="card-text">Navega por los canales de Ámsterdam, admira los campos de tulipanes y los molinos de viento.</p>
+                            <div class="price-section">
+                                <label for="persons-paises-bajos" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-paises-bajos" value="1" min="1" data-base-price="1050">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-paises-bajos">1050</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Países Bajos" data-persons-id="persons-paises-bajos">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/belgica.jpg" class="card-img-top" alt="Bélgica">
+                        <div class="card-body">
+                            <h5 class="card-title">Bélgica</h5>
+                            <p class="card-text">Disfruta del encanto de Bruselas, las ciudades medievales como Brujas y Gante.</p>
+                            <div class="price-section">
+                                <label for="persons-belgica" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-belgica" value="1" min="1" data-base-price="950">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-belgica">950</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Bélgica" data-persons-id="persons-belgica">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/suiza.jpg" class="card-img-top" alt="Suiza">
+                        <div class="card-body">
+                            <h5 class="card-title">Suiza</h5>
+                            <p class="card-text">Admira los Alpes suizos, los lagos cristalinos y las ciudades cosmopolitas.</p>
+                            <div class="price-section">
+                                <label for="persons-suiza" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-suiza" value="1" min="1" data-base-price="1400">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-suiza">1400</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Suiza" data-persons-id="persons-suiza">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/austria.jpg" class="card-img-top" alt="Austria">
+                        <div class="card-body">
+                            <h5 class="card-title">Austria</h5>
+                            <p class="card-text">Explora la elegancia de Viena, los paisajes alpinos y la cultura musical.</p>
+                            <div class="price-section">
+                                <label for="persons-austria" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-austria" value="1" min="1" data-base-price="1100">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-austria">1100</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Austria" data-persons-id="persons-austria">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/irlanda.jpg" class="card-img-top" alt="Irlanda">
+                        <div class="card-body">
+                            <h5 class="card-title">Irlanda</h5>
+                            <p class="card-text">Sumérgete en el encanto de Dublín, los acantilados de Moher y sus verdes paisajes.</p>
+                            <div class="price-section">
+                                <label for="persons-irlanda" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-irlanda" value="1" min="1" data-base-price="1080">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-irlanda">1080</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Irlanda" data-persons-id="persons-irlanda">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/luxemburgo.jpg" class="card-img-top" alt="Luxemburgo">
+                        <div class="card-body">
+                            <h5 class="card-title">Luxemburgo</h5>
+                            <p class="card-text">Descubre la capital, sus castillos medievales y el Valle del Mosela.</p>
+                            <div class="price-section">
+                                <label for="persons-luxemburgo" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-luxemburgo" value="1" min="1" data-base-price="980">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-luxemburgo">980</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Luxemburgo" data-persons-id="persons-luxemburgo">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/mónaco.jpg" class="card-img-top" alt="Mónaco">
+                        <div class="card-body">
+                            <h5 class="card-title">Mónaco</h5>
+                            <p class="card-text">Experimenta el lujo de Montecarlo, el Palacio del Príncipe y el Gran Premio.</p>
+                            <div class="price-section">
+                                <label for="persons-monaco" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-monaco" value="1" min="1" data-base-price="1500">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-monaco">1500</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Mónaco" data-persons-id="persons-monaco">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card travel-card">
+                        <img src="assets/img/liechtenstein.jpg" class="card-img-top" alt="Liechtenstein">
+                        <div class="card-body">
+                            <h5 class="card-title">Liechtenstein</h5>
+                            <p class="card-text">Visita Vaduz, sus castillos y disfruta de paisajes alpinos.</p>
+                            <div class="price-section">
+                                <label for="persons-liechtenstein" class="form-label">Personas:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control persons-input" id="persons-liechtenstein" value="1" min="1" data-base-price="1200">
+                                </div>
+                                <p>Precio Total: $<span class="price-display" id="total-price-liechtenstein">1200</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal" data-country="Liechtenstein" data-persons-id="persons-liechtenstein">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservationModalLabel">Reservar viaje a <span id="modalCountryName"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reservationForm">
+                        <input type="hidden" id="countryInput" name="country" />
+                        <input type="hidden" id="modalNumberOfPersons" name="numberOfPersons" value="1" /> 
+
+                        <div class="mb-3">
+                            <label for="flightType" class="form-label">Tipo de vuelo</label>
+                            <select id="flightType" name="flightType" class="form-select" required>
+                                <option value="" disabled selected>Selecciona un tipo de vuelo</option>
+                                <option value="Ida">Ida</option>
+                                <option value="Ida y vuelta">Ida y vuelta</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="activitySelect" class="form-label">Actividades</label>
+                            <select id="activitySelect" name="activity" class="form-select" required>
+                                <option value="" disabled selected>Selecciona una actividad</option>
+                                <option value="Turismo cultural">Turismo cultural</option>
+                                <option value="Excursión a la naturaleza">Excursión a la naturaleza</option>
+                                <option value="Gastronomía local">Gastronomía local</option>
+                                <option value="Tour nocturno">Tour nocturno</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hotelSelect" class="form-label">Hoteles disponibles</label>
+                            <select id="hotelSelect" name="hotel" class="form-select" required>
+                                <option value="" disabled selected>Selecciona un hotel</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dateInput" class="form-label">Fecha de viaje</label>
+                            <input type="date" class="form-control" id="dateInput" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="flightTime" class="form-label">Horario del vuelo</label>
+                            <select id="flightTime" name="flightTime" class="form-select" required>
+                                <option value="" disabled selected>Selecciona un horario</option>
+                            </select>
+                        </div>
+                        
+                        <div class="modal-price-detail">
+                            <h6>Detalle de Precios:</h6>
+                            <p>Personas: <span id="displayNumberOfPersons">1</span></p> 
+                            <p>Vuelo: $<span id="modalFlightPrice">0.00</span></p>
+                            <p>Actividad: $<span id="modalActivityPrice">0.00</span></p>
+                            <p>Hotel: $<span id="modalHotelPrice">0.00</span></p>
+                            <p class="total-price">Total estimado: $<span id="modalTotalPrice">0.00</span></p>
+                        </div>
+
+                        <button type="submit" class="btn btn-success mt-3">Confirmar reserva</button>
+                    </form>
+                    <div id="confirmationMessage" class="confirmation-modal-message d-none">
+                        ¡Reserva Confirmada!
+                        <p style="font-size: 0.9rem; font-weight: normal; margin-top: 10px;">Detalles de la reserva:</p>
+                        <ul id="confirmationDetailsList" style="list-style: none; padding: 0; font-size: 0.85rem; font-weight: normal;">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4 mt-5 footer-grey-bg">
+        <div class="container">
+            <a href="index.html" class="btn btn-primary">Volver a Inicio</a>
+        </div>
+    </footer>
+
+    <footer class="mt-5">
+        <div class="container">
+            <p>&copy; 2025 Viajes Increíbles. Todos los derechos reservados.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const PRECIOS_GLOBALES = {
+            vuelos: {
+                "Ida": 300,
+                "Ida y vuelta": 500,
+                "No seleccionado": 0
+            },
+            actividades: {
+                "Turismo cultural": 70,
+                "Excursión a la naturaleza": 90,
+                "Gastronomía local": 80,
+                "Tour nocturno": 60,
+                "No seleccionada": 0
+            },
+            preciosHotelesPorPais: {
+                "Francia": { "Hotel París Torre": 350, "Pensión Provenza Rural": 180, "Hotel Niza Costera": 280 },
+                "Reino Unido": { "Hotel Londres Centro": 320, "Pensión Edimburgo Histórico": 170, "Hotel Liverpool Ciudad": 250 },
+                "Alemania": { "Hotel Berlín Muro": 290, "Pensión Múnich Oktoberfest": 160, "Hotel Fráncfort Negocios": 220 },
+                "Países Bajos": { "Hotel Ámsterdam Canales": 270, "Pensión Róterdam Puerto": 140, "Hotel Utrecht Medieval": 200 },
+                "Bélgica": { "Hotel Bruselas Gran Plaza": 260, "Pensión Brujas Encanto": 130, "Hotel Amberes Diamante": 190 },
+                "Suiza": { "Hotel Zúrich Finanzas": 380, "Pensión Ginebra Lago": 200, "Hotel Interlaken Montaña": 300 },
+                "Austria": { "Hotel Viena Clásico": 280, "Pensión Salzburgo Mozart": 150, "Innsbruck Alpine Resort": 230 },
+                "Irlanda": { "Hotel Dublín Cultural": 270, "Pensión Galway Costera": 140, "Cork City Hotel": 210 },
+                "Luxemburgo": { "Hotel Luxemburgo Centro": 250, "Pensión Mullerthal Nature": 130, "Esch-sur-Alzette Business Hotel": 180 },
+                "Mónaco": { "Hotel Montecarlo Lujo": 500, "Pensión La Condamine": 250, "Hotel Larvotto Beach": 400 },
+                "Liechtenstein": { "Hotel Vaduz Castillo": 320, "Pensión Triesenberg Vista": 160, "Malbun Ski Hotel": 260 }
+            }
+        };
+
+        function updateCardTotalPrice(personsInput) {
+            const basePrice = parseFloat(personsInput.getAttribute('data-base-price'));
+            const persons = parseInt(personsInput.value);
+            const totalPriceSpan = personsInput.closest('.price-section').querySelector('.price-display');
+            if (!isNaN(basePrice) && !isNaN(persons)) {
+                totalPriceSpan.textContent = (basePrice * persons).toFixed(0);
+            }
+        }
+
+        document.querySelectorAll('.persons-input').forEach(input => {
+            input.addEventListener('input', () => updateCardTotalPrice(input));
+            updateCardTotalPrice(input);
+        });
+
+        function guardarReserva(pais, vuelo, actividad, hotel, horario, personas, precioVuelo, precioActividad, precioHotel, precioTotal) {
+            const reserva = {
+                pais: pais,
+                vuelo: vuelo,
+                actividad: actividad,
+                hotel: hotel,
+                horario: horario,
+                personas: personas,
+                precioVuelo: precioVuelo,
+                precioActividad: precioActividad,
+                precioHotel: precioHotel,
+                precioTotal: precioTotal
+            };
+
+            let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+            reservas.push(reserva);
+            localStorage.setItem("reservas", JSON.stringify(reservas));
+
+            const confirmationMessageDiv = document.getElementById('confirmationMessage');
+            const reservationForm = document.getElementById('reservationForm');
+            const confirmationDetailsList = document.getElementById('confirmationDetailsList');
+
+            reservationForm.classList.add('d-none');
+            confirmationMessageDiv.classList.remove('d-none');
+            setTimeout(() => {
+                confirmationMessageDiv.classList.add('show');
+            }, 50);
+
+            confirmationDetailsList.innerHTML = `
+                <li><strong>País:</strong> ${pais}</li>
+                <li><strong>Personas:</strong> ${personas}</li>
+                <li><strong>Vuelo:</strong> ${vuelo} ($${precioVuelo.toFixed(2)})</li>
+                <li><strong>Actividad:</strong> ${actividad} ($${precioActividad.toFixed(2)})</li>
+                <li><strong>Hotel:</strong> ${hotel} ($${precioHotel.toFixed(2)})</li>
+                <li><strong>Fecha y Horario:</strong> ${horario}</li>
+                <li><strong>Total:</strong> $${precioTotal.toFixed(2)}</li>
+            `;
+
+            setTimeout(() => {
+                const modalInstance = bootstrap.Modal.getInstance(document.getElementById('reservationModal'));
+                modalInstance.hide();
+                reservationForm.reset();
+                reservationForm.classList.remove('d-none');
+                confirmationMessageDiv.classList.add('d-none');
+                confirmationMessageDiv.classList.remove('show');
+                confirmationDetailsList.innerHTML = '';
+            }, 5000);
+        }
+
+        const dataByCountry = {
+            "Francia": { hotels: ["Hotel París Torre", "Pensión Provenza Rural", "Hotel Niza Costera"], times: ["08:00", "13:00", "18:00"] },
+            "Reino Unido": { hotels: ["Hotel Londres Centro", "Pensión Edimburgo Histórico", "Hotel Liverpool Ciudad"], times: ["07:30", "12:30", "17:30"] },
+            "Alemania": { hotels: ["Hotel Berlín Muro", "Pensión Múnich Oktoberfest", "Hotel Fráncfort Negocios"], times: ["09:00", "14:00", "19:00"] },
+            "Países Bajos": { hotels: ["Hotel Ámsterdam Canales", "Pensión Róterdam Puerto", "Hotel Utrecht Medieval"], times: ["08:30", "13:30", "18:30"] },
+            "Bélgica": { hotels: ["Hotel Bruselas Gran Plaza", "Pensión Brujas Encanto", "Hotel Amberes Diamante"], times: ["07:45", "12:45", "17:45"] },
+            "Suiza": { hotels: ["Hotel Zúrich Finanzas", "Pensión Ginebra Lago", "Hotel Interlaken Montaña"], times: ["06:30", "11:30", "16:30"] },
+            "Austria": { hotels: ["Hotel Viena Clásico", "Pensión Salzburgo Mozart", "Innsbruck Alpine Resort"], times: ["08:15", "13:15", "18:15"] },
+            "Irlanda": { hotels: ["Hotel Dublín Cultural", "Pensión Galway Costera", "Cork City Hotel"], times: ["07:00", "12:00", "17:00"] },
+            "Luxemburgo": { hotels: ["Hotel Luxemburgo Centro", "Pensión Mullerthal Nature", "Esch-sur-Alzette Business Hotel"], times: ["09:00", "14:00", "19:00"] },
+            "Mónaco": { hotels: ["Hotel Montecarlo Lujo", "Pensión La Condamine", "Hotel Larvotto Beach"], times: ["09:30", "14:30", "19:30"] },
+            "Liechtenstein": { hotels: ["Hotel Vaduz Castillo", "Pensión Triesenberg Vista", "Malbun Ski Hotel"], times: ["08:45", "13:45", "18:45"] }
+        };
+
+        const countryNameSpan = document.getElementById('modalCountryName');
+        const countryInput = document.getElementById('countryInput');
+        const modalNumberOfPersonsInput = document.getElementById('modalNumberOfPersons'); 
+        const displayNumberOfPersonsSpan = document.getElementById('displayNumberOfPersons');
+
+        const hotelSelect = document.getElementById('hotelSelect');
+        const flightTypeSelect = document.getElementById('flightType');
+        const activitySelect = document.getElementById('activitySelect');
+        const dateInput = document.getElementById('dateInput');
+        const flightTimeSelect = document.getElementById('flightTime');
+        const reservationForm = document.getElementById('reservationForm'); 
+        const confirmationMessageDiv = document.getElementById('confirmationMessage'); 
+
+        const modalFlightPriceSpan = document.getElementById('modalFlightPrice');
+        const modalActivityPriceSpan = document.getElementById('modalActivityPrice');
+        const modalHotelPriceSpan = document.getElementById('modalHotelPrice');
+        const modalTotalPriceSpan = document.getElementById('modalTotalPrice');
+
+        function calcularPreciosModal() {
+            const pais = countryInput.value;
+            const personas = parseInt(modalNumberOfPersonsInput.value) || 1; 
+            const tipoVuelo = flightTypeSelect.value;
+            const actividadSeleccionada = activitySelect.value;
+            const hotelSeleccionado = hotelSelect.value;
+
+            let precioVuelo = PRECIOS_GLOBALES.vuelos[tipoVuelo] || 0;
+            let precioActividad = PRECIOS_GLOBALES.actividades[actividadSeleccionada] || 0;
+            let precioHotel = PRECIOS_GLOBALES.preciosHotelesPorPais[pais]?.[hotelSeleccionado] || 0;
+
+            precioVuelo *= personas;
+            precioActividad *= personas;
+            precioHotel *= personas;
+
+            const total = precioVuelo + precioActividad + precioHotel;
+
+            modalFlightPriceSpan.textContent = precioVuelo.toFixed(2);
+            modalActivityPriceSpan.textContent = precioActividad.toFixed(2);
+            modalHotelPriceSpan.textContent = precioHotel.toFixed(2);
+            modalTotalPriceSpan.textContent = total.toFixed(2);
+        }
+
+        const reservationModal = document.getElementById('reservationModal');
+        reservationModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const country = button.getAttribute('data-country');
+            const personsInputId = button.getAttribute('data-persons-id'); 
+            const personsInputValue = document.getElementById(personsInputId) ? parseInt(document.getElementById(personsInputId).value) : 1; 
+
+            countryNameSpan.textContent = country;
+            countryInput.value = country;
+            modalNumberOfPersonsInput.value = personsInputValue; 
+            displayNumberOfPersonsSpan.textContent = personsInputValue;
+
+            reservationForm.classList.remove('d-none');
+            confirmationMessageDiv.classList.add('d-none');
+            confirmationMessageDiv.classList.remove('show');
+
+            hotelSelect.innerHTML = '<option value="" disabled selected>Selecciona un hotel</option>';
+            flightTimeSelect.innerHTML = '<option value="" disabled selected>Selecciona un horario</option>';
+            flightTypeSelect.value = ''; 
+            activitySelect.value = ''; 
+            dateInput.value = ''; 
+
+            if (dataByCountry[country]) {
+                dataByCountry[country].hotels.forEach(hotel => {
+                    const option = document.createElement('option');
+                    option.value = hotel;
+                    option.textContent = hotel;
+                    hotelSelect.appendChild(option);
+                });
+                dataByCountry[country].times.forEach(time => {
+                    const option = document.createElement('option');
+                    option.value = time;
+                    option.textContent = time;
+                    flightTimeSelect.appendChild(option);
+                });
+            }
+
+            modalFlightPriceSpan.textContent = '0.00';
+            modalActivityPriceSpan.textContent = '0.00';
+            modalHotelPriceSpan.textContent = '0.00';
+            modalTotalPriceSpan.textContent = '0.00';
+
+            flightTypeSelect.addEventListener('change', calcularPreciosModal);
+            activitySelect.addEventListener('change', calcularPreciosModal);
+            hotelSelect.addEventListener('change', calcularPreciosModal);
+        });
+
+        reservationModal.addEventListener('hide.bs.modal', () => {
+            flightTypeSelect.removeEventListener('change', calcularPreciosModal);
+            activitySelect.removeEventListener('change', calcularPreciosModal);
+            hotelSelect.removeEventListener('change', calcularPreciosModal);
+            reservationForm.classList.remove('d-none');
+            confirmationMessageDiv.classList.add('d-none');
+            confirmationMessageDiv.classList.remove('show');
+            document.getElementById('confirmationDetailsList').innerHTML = '';
+        });
+
+        reservationForm.addEventListener('submit', (event) => {
+            event.preventDefault(); 
+
+            const pais = countryInput.value;
+            const personas = parseInt(modalNumberOfPersonsInput.value);
+            const tipoVuelo = flightTypeSelect.value;
+            const actividad = activitySelect.value;
+            const hotel = hotelSelect.value;
+            const fecha = dateInput.value; 
+            const horario = flightTimeSelect.value;
+
+            let precioVuelo = PRECIOS_GLOBALES.vuelos[tipoVuelo] * personas || 0;
+            let precioActividad = PRECIOS_GLOBALES.actividades[actividad] * personas || 0;
+            let precioHotel = PRECIOS_GLOBALES.preciosHotelesPorPais[pais]?.[hotel] * personas || 0;
+            const precioTotal = precioVuelo + precioActividad + precioHotel;
+
+            guardarReserva(pais, tipoVuelo, actividad, hotel, `${fecha} ${horario}`, personas, precioVuelo, precioActividad, precioHotel, precioTotal);
+        });
+    </script>
+</body>
+</html>

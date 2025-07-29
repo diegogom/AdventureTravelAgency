@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosotros - Adventures Travel Agency</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(120deg, #e0f7fa, #f0f8ff);
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+    }
+
+    .navbar {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .team-title {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .team-title h2 {
+      font-weight: bold;
+      font-size: 2.5rem;
+    }
+
+    .team-title p {
+      color: #666;
+      margin-bottom: 0;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 25px 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .glass-card img {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #0d6efd;
+      margin-bottom: 15px;
+    }
+
+    .glass-card h5 {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .glass-card .rol {
+      font-weight: 500;
+      color: #0d6efd;
+      margin-bottom: 15px;
+    }
+
+    .glass-card .social-icons a {
+      font-size: 1.3rem;
+      margin: 0 8px;
+      color: #0d6efd;
+      transition: color 0.3s ease;
+    }
+
+    .glass-card .social-icons a:hover {
+      color: #084298;
+    }
+
+    .section-divider {
+      width: 70px;
+      height: 4px;
+      background: #0d6efd;
+      margin: 15px auto 40px;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 576px) {
+      .glass-card {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">Adventures Travel</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">Nosotros</a></li>
+        <li class="nav-item"><a class="nav-link" href="mis_reservas.html"></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Título -->
+<div class="container team-title">
+  <h2>Nuestro Equipo</h2>
+  <div class="section-divider"></div>
+  <p>Personas apasionadas detrás de Adventures Travel Agency</p>
+</div>
+
+<!-- Tarjetas de Miembros -->
+<div class="container mt-5 mb-5">
+  <div class="row g-4">
+
+    <!-- Miembro 1 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="glass-card">
+        <img src="assets/img/abi.jpeg" alt="Abigail Galindo">
+        <h5>Abigail Galindo</h5>
+        <div class="rol">Jefa del Proyecto</div>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Miembro 2 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="glass-card">
+        <img src="assets/img/diego.jpeg" alt="Diego Gomez">
+        <h5>Diego Gómez</h5>
+        <div class="rol">Diseñador Web</div>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+          <a href="#"><i class="bi bi-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Miembro 3 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="glass-card">
+        <img src="assets/img/styv.jpeg" alt="Styv Portillo">
+        <h5>Styv Portillo</h5>
+        <div class="rol">Coordinador de Reservas</div>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Miembro 4 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="glass-card">
+        <img src="assets/img/jeol.jpeg" alt="Joel Lopez">
+        <h5>Joel López</h5>
+        <div class="rol">Especialista en Destinos</div>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Miembro 5 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="glass-card">
+        <img src="assets/img/iker.jpeg" alt="Iker Figueroa">
+        <h5>Iker Figueroa</h5>
+        <div class="rol">Especialista en Logistica</div>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+          <a href="#"><i class="bi bi-github"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Miembro 6 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="glass-card">
+        <img src="assets/img/anderson.jpeg" alt="Anderson Ramon">
+        <h5>Anderson Ramón</h5>
+        <div class="rol">Especialista en Atención al Cliente</div>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+          <a href="#"><i class="bi bi-map"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Miembro 7 -->
+    <div class="col-sm-6 col-lg-4 mx-auto">
+      <div class="glass-card">
+        <img src="assets/img/torres.jpeg" alt="Diego Torres">
+        <h5>Diego Torres</h5>
+        <div class="rol">Especialista en Programación</div>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+          <a href="#"><i class="bi bi-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

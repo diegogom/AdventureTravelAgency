@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mensajes de Contacto - Adventures Travel Agency</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: white;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      min-height: 100vh;
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.95);
+      border: none;
+      border-radius: 15px;
+      color: #333;
+    }
+
+    .card-title {
+      font-weight: bold;
+    }
+
+    .btn-responder, .btn-enviar-respuesta {
+      background-color: #598BB3;
+      color: white;
+    }
+
+    .btn-eliminar {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .respuesta-form {
+      display: none;
+    }
+
+    .mensaje-card {
+      transition: transform 0.3s ease;
+    }
+
+    .mensaje-card:hover {
+      transform: scale(1.02);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <div class="container">
+      <a class="navbar-brand mx-auto" href="index.html">Adventures Travel Agency</a>
+    </div>
+  </nav>
+
+  <!-- Fondo con overlay -->
+  <div class="overlay">
+    <div class="container py-5">
+      <h2 class="text-center mb-4">📬 Mensajes Recibidos</h2>
+      <div id="mensajesContainer" class="row gy-4">
+        <!-- Los mensajes se insertarán aquí dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Script principal -->
+  <script>
+    document.addEventListener("DOMContentLoaded", cargarMensajes);
+
+    function cargarMensajes() {
+      const mensajes = JSON.parse(localStorage.getItem("mensajesContacto")) || [];
+      const container = document.getElementById("mensajesContainer");
+      container.innerHTML = "";
+
+      if (mensajes.length === 0) {
+        container.innerHTML = '<div class="col-12 text-center text-muted">No hay mensajes aún.</div>';
+        return;
+      }
+
+      mensajes.forEach((msg, i) => {
+        const card = document.createElement("div");
+        card.className = "col-md-6";
+        card.innerHTML = `
+          <div class="card shadow-sm mensaje-card">
+            <div class="card-body">
+              <h5 class="card-title">📨 Mensaje #${i + 1}</h5>
+              <p><strong>Nombre:</strong> ${msg.nombre}</p>
+              <p><strong>Correo:</strong> ${msg.correo}</p>
+              <p><strong>Mensaje:</strong> ${msg.mensaje}</p>
+              <p class="text-muted"><small><strong>Fecha:</strong> ${msg.fecha}</small></p>
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-responder btn-sm" onclick="mostrarFormulario(${i})">Responder</button>
+                <button class="btn btn-eliminar btn-sm" onclick="eliminarMensaje(${i})">Eliminar</button>
+              </div>
+              <form class="respuesta-form mt-3" id="formRespuesta${i}" method="POST" action="responder.php">
+                <input type="hidden" name="destinatario" value="${msg.correo}">
+                <div class="mb-2">
+                  <label class="form-label">Tu Gmail:</label>
+                  <input type="email" required class="form-control" name="remitente" placeholder="ejemplo@gmail.com">
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Tu Mensaje:</label>
+                  <textarea required class="form-control" name="mensaje" rows="3" placeholder="Escribe tu respuesta..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-enviar-respuesta btn-sm">📤 Enviar Respuesta</button>
+              </form>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function mostrarFormulario(index) {
+      const form = document.getElementById(`formRespuesta${index}`);
+      form.style.display = (form.style.display === "block") ? "none" : "block";
+    }
+
+    function eliminarMensaje(index) {
+      if (confirm("¿Estás seguro que deseas eliminar este mensaje?")) {
+        let mensajes = JSON.parse(localStorage.getItem("mensajesContacto")) || [];
+        mensajes.splice(index, 1);
+        localStorage.setItem("mensajesContacto", JSON.stringify(mensajes));
+        cargarMensajes();
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+

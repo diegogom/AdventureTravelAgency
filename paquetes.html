@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Paquetes - Adventures Travel Agency</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #BFBDBD;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 70px; /* Asegúrate de que este valor coincida con la altura de tu navbar fija */
+        }
+        .paquete-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+            display: flex;
+            flex-direction: column;
+        }
+        .paquete-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Empuja el botón al final */
+            flex-grow: 1;
+        }
+        h1 {
+            text-align: center;
+            color: #FFFFFF;
+            margin: 30px 0;
+        }
+        .btn-volver {
+            display: block;
+            margin: 40px auto;
+            background-color: #598BB3; /* Color consistente con la barra de navegación */
+            color: white;
+            border: none;
+            width: fit-content;
+        }
+        .btn-volver:hover {
+            background-color: #53157a;
+        }
+        /* Estilo para los detalles del paquete dentro de la tarjeta */
+        .card-text strong {
+            color: #34495e;
+        }
+        .card-text ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 5px; /* Reduce el margen inferior de la lista */
+        }
+        .card-text ul li:before {
+            content: "• ";
+            color: #598BB3; /* Color consistente */
+            font-weight: bold;
+        }
+        /* Estilos específicos para el modal */
+        #reservaModal .modal-header {
+            background-color: #598BB3; /* Color consistente */
+            color: white;
+            border-bottom: none;
+        }
+        #reservaModal .modal-title {
+            font-weight: bold;
+        }
+        #reservaModal .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%); /* Hace la X blanca */
+        }
+        #reservaModal .modal-body {
+            padding: 30px;
+        }
+        #reservaModal .modal-body strong {
+            color: #34495e;
+        }
+        #reservaModal .modal-body ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        #reservaModal .modal-body ul li:before {
+            content: "• ";
+            color: #28a745;
+            font-weight: bold;
+        }
+        #reservaModal .modal-footer {
+            border-top: none;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #598BB3;">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Adventures Travel Agency</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="paquetes.html">Paquetes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mis-reservas.html"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Paquetes Turísticos - Explora Europa</h1>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+            <div class="col">
+                <div class="card paquete-card">
+                    <img src="assets/img/alpes.jfif" class="card-img-top" alt="Aventura Alpes Suizos">
+                    <div class="card-body">
+                        <h5 class="card-title">Aventura en los Alpes Suizos</h5>
+                        <p class="card-text">
+                            <strong>🏔️ Destino:</strong> Interlaken, Suiza<br>
+                            <strong>Actividades principales:</strong> Senderismo, Rafting, Escalada.<br>
+                            <strong>🕒 Duración:</strong> 6 días / 5 noches<br>
+                            <strong>💰 Precio:</strong> $1200 por persona
+                        </p>
+                        <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#reservaModal"
+                                data-paquete-titulo="Aventura en los Alpes Suizos"
+                                data-paquete-destino="Interlaken, Suiza"
+                                data-paquete-actividades="Senderismo por valles glaciares, Rafting en el río Lütschine (Temporada Verano), Escalada y Vía Ferrata guiada, Excursión a Jungfraujoch 'Top of Europe'."
+                                data-paquete-duracion="6 días / 5 noches"
+                                data-paquete-precio="1200"
+                                data-paquete-imagen="assets/img/alpes.jfif">
+                            Reservar ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card paquete-card">
+                    <img src="assets/img/romaa.jpg" class="card-img-top" alt="Histórico Roma">
+                    <div class="card-body">
+                        <h5 class="card-title">Roma Imperial y Clásica</h5>
+                        <p class="card-text">
+                            <strong>🏛️ Destino:</strong> Roma, Italia<br>
+                            <strong>Actividades principales:</strong> Coliseo, Vaticano, Fontana di Trevi.<br>
+                            <strong>🕒 Duración:</strong> 5 días / 4 noches<br>
+                            <strong>💰 Precio:</strong> $950 por persona
+                        </p>
+                        <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#reservaModal"
+                                data-paquete-titulo="Roma Imperial y Clásica"
+                                data-paquete-destino="Roma, Italia"
+                                data-paquete-actividades="Tour guiado por el Coliseo y Foro Romano, Visita a la Ciudad del Vaticano y Museos Vaticanos, Paseo por la Fontana di Trevi y Panteón, Clase de cocina italiana tradicional."
+                                data-paquete-duracion="5 días / 4 noches"
+                                data-paquete-precio="950"
+                                data-paquete-imagen="assets/img/romaa.jpg">
+                            Reservar ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card paquete-card">
+                    <img src="assets/img/pariis.jfif" class="card-img-top" alt="Romántica París">
+                    <div class="card-body">
+                        <h5 class="card-title">Escapada Romántica en París</h5>
+                        <p class="card-text">
+                            <strong>🇫🇷 Destino:</strong> París, Francia<br>
+                            <strong>Actividades principales:</strong> Cena Torre Eiffel, Crucero Sena, Louvre.<br>
+                            <strong>🕒 Duración:</strong> 4 días / 3 noches<br>
+                            <strong>💰 Precio:</strong> $1500 por pareja
+                        </p>
+                        <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#reservaModal"
+                                data-paquete-titulo="Escapada Romántica en París"
+                                data-paquete-destino="París, Francia"
+                                data-paquete-actividades="Cena gourmet con vistas a la Torre Eiffel, Crucero por el Sena al atardecer, Visita privada al Museo del Louvre, Paseo por Montmartre y Sacré-Coœur."
+                                data-paquete-duracion="4 días / 3 noches"
+                                data-paquete-precio="1500"
+                                data-paquete-imagen="assets/img/pariis.jfif">
+                            Reservar ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card paquete-card">
+                    <img src="assets/img/balticas.jfif" class="card-img-top" alt="A Medida Bálticas">
+                    <div class="card-body">
+                        <h5 class="card-title">Paquete a Medida: Joyas Bálticas</h5>
+                        <p class="card-text">
+                            <strong>🇪🇪🇱🇻🇱🇹 Destino:</strong> Tú eliges (Tallin, Riga, Vilna)<br>
+                            <strong>Actividades principales:</strong> Tours personalizados, Asesoría experta.<br>
+                            <strong>🕒 Duración:</strong> Flexible (mínimo 4 días)<br>
+                            <strong>💰 Precio:</strong> Desde $800 por persona
+                        </p>
+                        <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#reservaModal"
+                                data-paquete-titulo="Paquete a Medida: Joyas Bálticas"
+                                data-paquete-destino="Tú eliges (Tallin, Riga, Vilna)"
+                                data-paquete-actividades="Tours personalizados según tus intereses, Asesoría experta para diseñar tu itinerario, Elección de hoteles y actividades exclusivas, Flexibilidad total en fechas y duración."
+                                data-paquete-duracion="Flexible (mínimo 4 días)"
+                                data-paquete-precio="800"
+                                data-paquete-imagen="assets/img/balticas.jfif">
+                            Reservar ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card paquete-card">
+                    <img src="assets/img/balcanes.jpg" class="card-img-top" alt="Mochilero Balcanes">
+                    <div class="card-body">
+                        <h5 class="card-title">Mochilero: Aventura por los Balcanes</h5>
+                        <p class="card-text">
+                            <strong>🇧🇦🇭🇷🇷🇸 Destino:</strong> Croacia, Bosnia-Herzegovina, Serbia<br>
+                            <strong>Actividades principales:</strong> Ciudades históricas, Hostales, Tren/Bus.<br>
+                            <strong>🕒 Duración:</strong> 10 días / 9 noches<br>
+                            <strong>💰 Precio:</strong> $700 por persona
+                        </p>
+                        <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#reservaModal"
+                                data-paquete-titulo="Mochilero: Aventura por los Balcanes"
+                                data-paquete-destino="Croacia, Bosnia-Herzegovina, Serbia"
+                                data-paquete-actividades="Recorrido por ciudades históricas (Dubrovnik, Mostar, Belgrado), Hospedaje en hostales con buena valoración, Transporte en autobús o tren (pases incluidos), Actividades culturales y vida nocturna local."
+                                data-paquete-duracion="10 días / 9 noches"
+                                data-paquete-precio="700"
+                                data-paquete-imagen="assets/img/balcanes.jpg">
+                            Reservar ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card paquete-card">
+                    <img src="assets/img/oktoberfest.jfif" class="card-img-top" alt="Grupal Oktoberfest">
+                    <div class="card-body">
+                        <h5 class="card-title">Grupal: Experiencia Oktoberfest (Múnich)</h5>
+                        <p class="card-text">
+                            <strong>🇩🇪 Destino:</strong> Múnich, Alemania (durante Oktoberfest)<br>
+                            <strong>Actividades principales:</strong> Oktoberfest, Tour cervecero, Palacio.<br>
+                            <strong>🕒 Duración:</strong> 4 días / 3 noches<br>
+                            <strong>💰 Precio:</strong> $900 por persona (mínimo 8)
+                        </p>
+                        <button type="button" class="btn btn-success mt-auto" data-bs-toggle="modal" data-bs-target="#reservaModal"
+                                data-paquete-titulo="Grupal: Experiencia Oktoberfest (Múnich)"
+                                data-paquete-destino="Múnich, Alemania (durante Oktoberfest)"
+                                data-paquete-actividades="Acceso preferente a carpas del Oktoberfest, Tour cervecero por Múnich, Visita al Palacio de Nymphenburg, Cena tradicional bávara con espectáculo."
+                                data-paquete-duracion="4 días / 3 noches"
+                                data-paquete-precio="900"
+                                data-paquete-imagen="assets/img/oktoberfest.jfif">
+                            Reservar ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="index.html" class="btn btn-volver mt-5">← Regresar al Inicio</a>
+
+    </div>
+
+    <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservaModalLabel">Detalles y Reserva del Paquete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <img id="modalImagenPaquete" src="" alt="Imagen del Paquete" class="img-fluid rounded mb-3" style="max-height: 250px; object-fit: cover; width: 100%;">
+                            <h4 id="modalTituloPaquete" class="mt-2 text-primary"></h4>
+                        </div>
+                        <div class="col-md-7">
+                            <p><strong>Destino:</strong> <span id="modalDestinoPaquete"></span></p>
+                            <p><strong>Duración:</strong> <span id="modalDuracionPaquete"></span></p>
+                            <p><strong>Precio:</strong> <span id="modalPrecioPaquete"></span></p>
+                            <p><strong>Actividades Incluidas:</strong></p>
+                            <ul id="modalActividadesPaquete">
+                            </ul>
+
+                            <hr>
+
+                            <h5>Formulario de Reserva</h5>
+                            <form id="formModalReserva" class="needs-validation" novalidate>
+                                <input type="hidden" id="modalPaqueteSeleccionado" name="paqueteSeleccionado">
+                                <input type="hidden" id="modalPrecioBasePaquete" name="precioBasePaquete">
+                                <input type="hidden" id="modalImagenUrlPaquete" name="imagenUrlPaquete">
+                                <input type="hidden" id="modalActividadesDetallePaquete" name="actividadesDetallePaquete">
+                                <input type="hidden" id="modalDuracionPaqueteHidden" name="duracionPaqueteHidden">
+
+
+                                <div class="mb-3">
+                                    <label for="modalNombreCompleto" class="form-label">Nombre Completo</label>
+                                    <input type="text" class="form-control" id="modalNombreCompleto" required>
+                                    <div class="invalid-feedback">
+                                        Por favor, ingresa tu nombre completo.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="modalEmail" class="form-label">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="modalEmail" required>
+                                    <div class="invalid-feedback">
+                                        Por favor, ingresa un correo electrónico válido.
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="modalFechaInicio" class="form-label">Fecha de Inicio</label>
+                                        <input type="date" class="form-control" id="modalFechaInicio" required>
+                                        <div class="invalid-feedback">
+                                            Por favor, selecciona una fecha de inicio.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="modalCantidadPersonas" class="form-label">Número de Personas</label>
+                                        <input type="number" class="form-control" id="modalCantidadPersonas" min="1" value="1" required>
+                                        <div class="invalid-feedback">
+                                            Por favor, ingresa el número de personas (mínimo 1).
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="modalComentarios" class="form-label">Comentarios Adicionales (opcional)</label>
+                                    <textarea class="form-control" id="modalComentarios" rows="2"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Confirmar Reserva</button>
+                            </form>
+                            <div id="modalMensajeConfirmacion" class="alert mt-3 d-none" role="alert"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const reservaModal = document.getElementById('reservaModal');
+            const formModalReserva = document.getElementById('formModalReserva');
+            const modalMensajeConfirmacion = document.getElementById('modalMensajeConfirmacion');
+
+            // Escuchar cuando el modal se va a mostrar
+            reservaModal.addEventListener('show.bs.modal', function (event) {
+                // Botón que disparó el modal
+                const button = event.relatedTarget;
+
+                // Extraer información de los atributos data-* del botón
+                const titulo = button.getAttribute('data-paquete-titulo');
+                const destino = button.getAttribute('data-paquete-destino');
+                const actividadesStr = button.getAttribute('data-paquete-actividades');
+                const duracion = button.getAttribute('data-paquete-duracion');
+                const precio = button.getAttribute('data-paquete-precio'); // Precio como número
+                const imagen = button.getAttribute('data-paquete-imagen');
+
+                // Actualizar el contenido del modal
+                document.getElementById('modalTituloPaquete').textContent = titulo;
+                document.getElementById('modalDestinoPaquete').textContent = destino;
+                document.getElementById('modalDuracionPaquete').textContent = duracion;
+                document.getElementById('modalPrecioPaquete').textContent = `$${parseFloat(precio).toLocaleString('es-GT')}`; // Formatear para mostrar
+                document.getElementById('modalImagenPaquete').src = imagen;
+                document.getElementById('modalImagenPaquete').alt = 'Imagen de ' + titulo;
+
+                // Limpiar y llenar la lista de actividades
+                const actividadesList = document.getElementById('modalActividadesPaquete');
+                actividadesList.innerHTML = ''; // Limpiar elementos previos
+                if (actividadesStr) {
+                    actividadesStr.split(',').forEach(actividad => {
+                        const li = document.createElement('li');
+                        li.textContent = actividad.trim();
+                        actividadesList.appendChild(li);
+                    });
+                }
+
+                // Establecer los datos del paquete en campos ocultos del formulario
+                document.getElementById('modalPaqueteSeleccionado').value = titulo;
+                document.getElementById('modalPrecioBasePaquete').value = precio; // Precio base numérico
+                document.getElementById('modalImagenUrlPaquete').value = imagen;
+                document.getElementById('modalActividadesDetallePaquete').value = actividadesStr;
+                document.getElementById('modalDuracionPaqueteHidden').value = duracion;
+
+
+                // Limpiar el formulario y mensajes de validación
+                formModalReserva.reset();
+                formModalReserva.classList.remove('was-validated');
+                modalMensajeConfirmacion.classList.add('d-none');
+                modalMensajeConfirmacion.classList.remove('alert-success', 'alert-danger');
+                modalMensajeConfirmacion.textContent = '';
+
+                // Establecer la fecha mínima para el campo de fecha (mañana)
+                const today = new Date();
+                const tomorrow = new Date(today);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const minDate = tomorrow.toISOString().split('T')[0];
+                document.getElementById('modalFechaInicio').setAttribute('min', minDate);
+            });
+
+            // Manejar el envío del formulario dentro del modal
+            formModalReserva.addEventListener('submit', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                modalMensajeConfirmacion.classList.add('d-none');
+                modalMensajeConfirmacion.classList.remove('alert-success', 'alert-danger');
+                modalMensajeConfirmacion.textContent = '';
+
+                if (formModalReserva.checkValidity()) {
+                    const tituloPaquete = document.getElementById('modalPaqueteSeleccionado').value;
+                    const precioBasePaquete = parseFloat(document.getElementById('modalPrecioBasePaquete').value);
+                    const imagenUrlPaquete = document.getElementById('modalImagenUrlPaquete').value;
+                    const actividadesDetallePaquete = document.getElementById('modalActividadesDetallePaquete').value;
+                    const duracionPaquete = document.getElementById('modalDuracionPaqueteHidden').value;
+
+
+                    const nombre = document.getElementById('modalNombreCompleto').value;
+                    const email = document.getElementById('modalEmail').value;
+                    const fechaInicio = document.getElementById('modalFechaInicio').value;
+                    const cantidadPersonas = parseInt(document.getElementById('modalCantidadPersonas').value);
+                    const comentarios = document.getElementById('modalComentarios').value;
+
+                    // Calcular el precio total
+                    const precioTotal = precioBasePaquete * cantidadPersonas;
+
+
+                    const reserva = {
+                        tipo: "paquete", // Identificador para mis-reservas.html
+                        id: Date.now(), // ID único para cada reserva
+                        paquete: tituloPaquete,
+                        destino: document.getElementById('modalDestinoPaquete').textContent, // Usar el destino visible
+                        duracion: duracionPaquete,
+                        actividades: actividadesDetallePaquete,
+                        precioUnitario: precioBasePaquete, // Precio del paquete por unidad (persona/pareja)
+                        cantidadPersonas: cantidadPersonas,
+                        precioTotal: precioTotal,
+                        nombreCliente: nombre,
+                        emailCliente: email,
+                        fechaInicio: fechaInicio,
+                        comentarios: comentarios,
+                        fechaReserva: new Date().toLocaleString(),
+                        imagen: imagenUrlPaquete // Guardar la URL de la imagen para mis-reservas
+                    };
+
+                    // Obtener reservas existentes, o inicializar si no hay ninguna
+                    // ¡CAMBIO CLAVE AQUÍ! Usamos 'reservasGlobales'
+                    let reservas = JSON.parse(localStorage.getItem('reservasGlobales')) || [];
+                    reservas.push(reserva);
+                    localStorage.setItem('reservasGlobales', JSON.stringify(reservas));
+
+                    modalMensajeConfirmacion.classList.remove('d-none');
+                    modalMensajeConfirmacion.classList.add('alert-success');
+                    modalMensajeConfirmacion.textContent = `¡Reserva del paquete "${tituloPaquete}" confirmada con éxito! Revisa "Mis Reservas" para ver los detalles. Total: $${precioTotal.toLocaleString('es-GT')}`;
+                    formModalReserva.classList.remove('was-validated'); // Quitar clases de validación
+                    formModalReserva.reset(); // Limpiar el formulario
+
+                    // Opcional: Cerrar el modal después de un breve tiempo
+                    setTimeout(() => {
+                        const modalInstance = bootstrap.Modal.getInstance(reservaModal);
+                        if (modalInstance) {
+                            modalInstance.hide();
+                        }
+                    }, 2000); // Cierra el modal después de 2 segundos
+
+                } else {
+                    formModalReserva.classList.add('was-validated');
+                    modalMensajeConfirmacion.classList.remove('d-none');
+                    modalMensajeConfirmacion.classList.add('alert-danger');
+                    modalMensajeConfirmacion.textContent = 'Por favor, completa todos los campos requeridos correctamente.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
